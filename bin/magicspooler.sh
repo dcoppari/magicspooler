@@ -70,5 +70,5 @@ esac
 if [ -f "$RESULT" ]; then
     echo "OK $RESULT"
 else
-    echo "NOK Error no generado"
+    echo "NOK Error generating file"
 fi

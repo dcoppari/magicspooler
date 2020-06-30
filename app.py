@@ -16,11 +16,8 @@ def verify_password(username, password):
     MAGICSPOOLER_USER=os.getenv("MAGICSPOOLER_USER", "")
     MAGICSPOOLER_PASSWORD=os.getenv("MAGICSPOOLER_PASSWORD", "")
 
-    if MAGICSPOOLER_PASSWORD == "":
-        return False
-
-    if MAGICSPOOLER_USER == "":
-        MAGICSPOOLER_USER = MAGICSPOOLER_PASSWORD
+    if MAGICSPOOLER_USER == "" and MAGICSPOOLER_PASSWORD == "":
+        return True
 
     return (username == MAGICSPOOLER_USER and password == MAGICSPOOLER_PASSWORD)
 
@@ -32,10 +29,12 @@ def chrome_pdf_url():
     """
 
     output = ""
-    url = request.values.get("url")
+    url = request.values.get("url","")
 
     if url != "":
         output = subprocess.getoutput("magicspooler.sh --chrome-to-pdf " + url)
+    else:
+        return '', status.HTTP_400_BAD_REQUEST
 
     return evaluates_output(output)
 
@@ -47,10 +46,12 @@ def chrome_image_url():
     """
 
     output = ""
-    url = request.values.get("url")
+    url = request.values.get("url","")
 
     if url != "":
         output = subprocess.getoutput("magicspooler.sh --chrome-to-png " + url)
+    else:
+        return '', status.HTTP_400_BAD_REQUEST
 
     return evaluates_output(output, 'image/png', 'png')
 

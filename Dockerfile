@@ -80,6 +80,9 @@ ADD app.py /app.py
 
 RUN chmod +x /usr/local/bin/magicspooler.sh
 
+ENV MAGICSPOOLER_USER ""
+ENV MAGICSPOOLER_PASSWORD ""
+
 VOLUME ["/tmp"]
 
 WORKDIR "/tmp"
